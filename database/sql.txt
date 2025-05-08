@@ -1,0 +1,75 @@
+KHS DETAIL UNTUK TIAP MAHASISWA
+SELECT 
+    mhs.nim,
+    mhs.nama AS nama_mahasiswa,
+    j.nama_jurusan,
+    mk.kode_mk,
+    mk.nama_mk,
+    mk.sks,
+    n.nilai_angka,
+    n.nilai_huruf,
+    mm.semester,
+    -- Menghitung Total SKS di semester tersebut
+    SUM(mk.sks) AS total_sks,
+    -- Menghitung IPK berdasarkan nilai angka dan bobot SKS selama semester tersebut
+    ROUND(SUM(
+        CASE
+            WHEN n.nilai_angka >= 85 THEN 4.0
+            WHEN n.nilai_angka >= 70 THEN 3.0
+            WHEN n.nilai_angka >= 55 THEN 2.0
+            WHEN n.nilai_angka >= 40 THEN 1.0
+            ELSE 0.0
+        END * mk.sks
+    ) / SUM(mk.sks), 2) AS ipk
+FROM mahasiswa_mk mm
+JOIN mahasiswa mhs ON mm.mahasiswa_id = mhs.id
+JOIN jurusan j ON mhs.jurusan_id = j.id
+JOIN mata_kuliah mk ON mm.mk_id = mk.id
+JOIN nilai n ON n.mahasiswa_id = mhs.id AND n.mk_id = mk.id
+WHERE mhs.nim = '123456789'  -- Ganti dengan NIM yang diinginkan
+AND mm.semester = 1         -- Ganti dengan semester yang diinginkan (misalnya semester 1)
+GROUP BY mm.mahasiswa_id, mm.semester
+ORDER BY mm.semester, mk.nama_mk;
+
+DAFTAR KHS SELURUH MAHASISWA:
+
+SELECT 
+    mhs.nim,
+    mhs.nama AS nama_mahasiswa,
+    j.nama_jurusan,
+    COUNT(n.id) AS jumlah_mk,
+    SUM(mk.sks) AS total_sks,
+    ROUND(SUM(
+        CASE
+            WHEN n.nilai_angka >= 85 THEN 4.0
+            WHEN n.nilai_angka >= 70 THEN 3.0
+            WHEN n.nilai_angka >= 55 THEN 2.0
+            WHEN n.nilai_angka >= 40 THEN 1.0
+            ELSE 0.0
+        END * mk.sks
+    ) / SUM(mk.sks), 2) AS ipk
+FROM nilai n
+JOIN mahasiswa mhs ON n.mahasiswa_id = mhs.id
+JOIN jurusan j ON mhs.jurusan_id = j.id
+JOIN mata_kuliah mk ON n.mk_id = mk.id
+GROUP BY mhs.id
+ORDER BY mhs.nama;
+
+KARTU RENCANA STUDI:
+
+SELECT 
+    j.nama_jurusan,
+    mk.kode_mk,
+    mk.nama_mk,
+    mk.sks,
+    CASE
+        WHEN mk.sks = 1 THEN 1.00
+        WHEN mk.sks = 2 THEN 2.00
+        WHEN mk.sks = 3 THEN 3.00
+        WHEN mk.sks = 4 THEN 4.00
+        ELSE 0.00
+    END AS bobot_sks
+FROM mata_kuliah mk
+JOIN jurusan j ON mk.jurusan_id = j.id
+WHERE j.id = 3
+ORDER BY mk.kode_mk;

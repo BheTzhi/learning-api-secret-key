@@ -1,66 +1,131 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Learning API JWT
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a simple Laravel API that uses JWT for authentication. The application includes endpoints and view a student data, courses, and departments.
 
-## About Laravel
+## Requirements
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP >= 7.4
+- Composer
+- Laravel 8.x or above
+- MySQL or compatible database
+- Postman (for testing endpoints)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Follow these steps to get yout local envoriment up and running.
 
-## Learning Laravel
+1. **Clone the Repository**
+    Clone the repository to your local machine:
+    ```bash
+    git clone [https://github.com/BheTzhi/learning-api-jwt.git](https://github.com/BheTzhi/learning-api-jwt.git)
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Install Dependencies**
+    Navigate to the project directory and install the required dependencies via Composer:
+    ```cd learning-api-jwt (you project name)
+    composer install
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. **Configure Environment Variables**
+    Edit the `.env` file to match your local database configuration.
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=27017
+    DB_DATABASE=your_database_name
+    DB_USERNAME=your_database_username
+    DB_PASSWORD=your_database_password
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **Run Migrations and Seed Data**
+    Run the migrations to create the required tables in your database:
+    ```bash
+    php artisan migrate
+    ```
+    Seed the database with sample data:
+    ```bash
+    php artisan db:seed
+    ```
 
-## Laravel Sponsors
+5. **Start the Development Server**
+    Run the development server to start the API:
+    ```bash
+    php artisan serve
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+The Api will be access at `http://127.0.0.1:8000` .
 
-### Premium Partners
+# Endpoints
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Here are the available API routes:
+
+## Public Endpoints
+* **Get All Students**: `GET /mahasiswa`
+    Retrieves a list of all students.
+* **Get All Departments**: `GET /jurusan`
+Retrieves a list of all departments.
+
+* **Get All Courses**: `GET /matakuliah`
+Retrieves a list of all courses.
+
+* **Get Student by ID**: `GET /mahasiswa/{id}`
+Retrieves a specific student by ID.
+
+* **Get Department by ID**: `GET /jurusan/{id}`
+Retrieves a specific department by ID.
+
+* **Get Course by ID**: `GET /matakuliah/{id}`
+Retrieves a specific course by ID.
+
+## Private Endpoint
+* **Get Student KHS**: `GET /mahasiswa/khs`
+This endpoint requires authentication using API key and semester information.
+
+Headers:
+* `X-API-KEY` (The API key stored in the mahasiswa table in your database)
+* `X-API-SEMESTER` (Optional, semester information)
+
+Query Parameters:
+* `nim` (Student NIM)
+
+Example Request (Postman):
+```bash
+GET htt://127.0.0.1:8000/mahasiswa/khs?nim=12345
+```
+
+Headers:
+* `X-API-KEY: your_api_key`
+* `X-API-SEMESTER: 4` (1-8 or null optional)
+
+## Middleware
+The `/mahasiswa/khs` endpoint is protected by the `verify.mahasiswa` middleware. This middleware verifies the student's identity by checking the `X-API-KEY` header against the key stored in the `mahasiswa` table and validates the `nim` query parameter.
+
+## Where to Find `X-API-KEY`
+The `X-API-KEY` is generated and stored in the `mahasiswa` table in the database. This key is assigned when the student record is created and can be retrieved by querying the `mahasiswa` table for the corresponding student's record. Ensure that this key is kept secure and used properly in the headers for authenticated requests.
+
+## Example Request Using Postman
+To test the endpoints, you can use Postman by sending requests with the appropriate headers.
+
+* Get All Students:
+    `GET http://127.0.0.1:8000/mahasiswa`
+
+* Get Student KHS:
+    `GET http://127.0.0.1:8000/mahasiswa/khs?nim=12345`
+    Headers:
+    *`X-API-KEY: your_api_key`
+    *`X-API-SEMESTER: 2025-1 (optional)`
 
 ## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Feel free to submit issues or create pull requests if you have improvements or bug fixes. Contributions are always welcome!
 
 ## License
+This project is open source and available under the MIT License.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 👤 Author
+
+BheTzhi
+
+## 🕋 Bismillah
+This project is built as a learning tool and to demonstrate Laravel integration with JWT.
+
+May it be useful and bring barakah.

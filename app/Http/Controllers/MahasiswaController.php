@@ -22,7 +22,7 @@ class MahasiswaController extends Controller
 
         $semester = $request->get('semester');
         $khs = $this->getKHS($mahasiswa, $semester);
-        $ipk = $this->hitungIPK($mahasiswa, $semester);  // Memperbaiki: Terfilter berdasarkan semester
+        $ipk = $this->hitungIPK($mahasiswa, $semester);
         $predikat = $this->getPredikat($ipk);
 
         return response()->json([
@@ -37,17 +37,17 @@ class MahasiswaController extends Controller
 
     private function getKHS($mahasiswa, $semester)
     {
-        // Memfilter mahasiswaMk berdasarkan semester jika ada filter semester
+
         $mahasiswaMk = $semester
             ? $mahasiswa->mahasiswaMk->where('semester', $semester)
             : $mahasiswa->mahasiswaMk;
 
-        // Jika semester tidak ada data, beri pesan kesalahan
+
         if ($semester && $mahasiswaMk->isEmpty()) {
             return response()->json(['message' => "Anda belum/tidak mengikuti semester $semester"], 404);
         }
 
-        // Mengelompokkan data berdasarkan semester
+
         return $mahasiswaMk->groupBy('semester')->map(function ($semesterData, $semester) {
             return [
                 'semester' => $semester,
@@ -65,7 +65,7 @@ class MahasiswaController extends Controller
 
     private function hitungIPK($mahasiswa, $semester)
     {
-        // Memilih mata kuliah berdasarkan semester jika ada
+
         $mahasiswaMk = $semester
             ? $mahasiswa->mahasiswaMk->where('semester', $semester)
             : $mahasiswa->mahasiswaMk;
@@ -111,8 +111,8 @@ class MahasiswaController extends Controller
 
         $mahasiswa = Mahasiswa::all()->makeHidden(['secret_key']);
 
-        // If you want to visible the secret key
-        // $mahasiswa = Mahasiswa::all();
+
+
 
 
         return response()->json([
@@ -147,8 +147,8 @@ class MahasiswaController extends Controller
 
         $mahasiswa = Mahasiswa::where('id', $id)->first()->makeHidden(['secret_key']);
 
-        // If you want to visible the secret key
-        // $mahasiswa = Mahasiswa::where('id', $id)->first();      
+
+
 
         return response()->json([
             'request_at' => time(),

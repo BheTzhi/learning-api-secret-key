@@ -1,6 +1,6 @@
-# Learning API JWT
+# Learning API SECRET KEY
 
-This is a simple Laravel API that uses JWT for authentication. The application includes endpoints and view a student data, courses, and departments.
+This is a simple Laravel API that uses secret key for authentication. The application includes endpoints and view a student data, courses, and departments.
 
 ## Requirements
 
@@ -126,6 +126,6 @@ This project is open source and available under the MIT License.
 BheTzhi
 
 ## 🕋 Bismillah
-This project is built as a learning tool and to demonstrate Laravel integration with JWT.
+This project is built as a learning tool and to demonstrate Laravel integration with SECRET KEY.
 
 May it be useful and bring barakah.

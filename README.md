@@ -113,8 +113,8 @@ To test the endpoints, you can use Postman by sending requests with the appropri
     `GET http://127.0.0.1:8000/mahasiswa/khs?nim=12345`
     
     Headers:
-    *`X-API-KEY: your_api_key`
-    *`X-API-SEMESTER: 2025-1 (optional)`
+    * `X-API-KEY: your_api_key`
+    * `X-API-SEMESTER: 2025-1 (optional)`
 
 ## Contributing
 Feel free to submit issues or create pull requests if you have improvements or bug fixes. Contributions are always welcome!

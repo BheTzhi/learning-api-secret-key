@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('verify.mahasiswa')->get('/mahasiswa/khs', [MahasiswaController::class, 'index']);
+
 Route::get('/mahasiswa', [MahasiswaController::class, 'getAllMahasiswa']);
 Route::get('/jurusan', [MahasiswaController::class, 'getAllJurusan']);
 Route::get('/matakuliah', [MahasiswaController::class, 'getAllMataKuliah']);
 Route::get('/mahasiswa/{id}', [MahasiswaController::class, 'getAllMahasiswaById']);
 Route::get('/jurusan/{id}', [MahasiswaController::class, 'getAllJurusanById']);
 Route::get('/matakuliah/{id}', [MahasiswaController::class, 'getAllMataKuliahById']);
-
-Route::middleware('verify.mahasiswa')->get('/mahasiswa/khs', [MahasiswaController::class, 'index']);

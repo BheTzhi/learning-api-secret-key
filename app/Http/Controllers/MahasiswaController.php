@@ -16,6 +16,7 @@ class MahasiswaController extends Controller
             ->where('nim', $request->get('nim'))
             ->first();
 
+
         if (!$mahasiswa) {
             return response()->json(['message' => 'Mahasiswa tidak ditemukan'], 404);
         }
@@ -108,12 +109,8 @@ class MahasiswaController extends Controller
 
     public function getAllMahasiswa()
     {
-
+        // $mahasiswa = Mahasiswa::all();
         $mahasiswa = Mahasiswa::all()->makeHidden(['secret_key']);
-
-
-
-
 
         return response()->json([
             'request_at' => time(),
@@ -142,13 +139,12 @@ class MahasiswaController extends Controller
             'data' => $matakuliah
         ]);
     }
+
     public function getAllMahasiswaById($id)
     {
-
-        $mahasiswa = Mahasiswa::where('id', $id)->first()->makeHidden(['secret_key']);
-
-
-
+        // $mahasiswa = Mahasiswa::where('id', $id)->first();
+        $mahasiswa = Mahasiswa::where('id', $id)->first();
+        $mahasiswa?->makeHidden(['secret_key']);
 
         return response()->json([
             'request_at' => time(),

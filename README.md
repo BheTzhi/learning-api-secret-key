@@ -17,12 +17,12 @@ Follow these steps to get yout local envoriment up and running.
 1. **Clone the Repository**
     Clone the repository to your local machine:
     ```bash
-    git clone [https://github.com/BheTzhi/learning-api-jwt.git](https://github.com/BheTzhi/learning-api-jwt.git)
+    git clone [https://github.com/BheTzhi/learning-api-secret-key.git](https://github.com/BheTzhi/learning-api-secret-key.git)
     ```
 
 2. **Install Dependencies**
     Navigate to the project directory and install the required dependencies via Composer:
-    ```cd learning-api-jwt (you project name)
+    ```cd learning-api-secret-key (you project name)
     composer install
     ```
 

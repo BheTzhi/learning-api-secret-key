@@ -55,6 +55,22 @@ Follow these steps to get yout local envoriment up and running.
 
 The Api will be access at `http://127.0.0.1:8000` .
 
+## Live Demo
+
+If you want to try the API without setting up locally, you can access the deployed version here:
+
+🔗 [https://learning-api-secret-keys-production.up.railway.app/api/mahasiswa](https://learning-api-secret-keys-production.up.railway.app/api/mahasiswa)
+
+You can test other endpoints by adjusting the URL, for example:
+
+- All Students: `GET /api/mahasiswa`
+- All Departments: `GET /api/jurusan`
+- All Courses: `GET /api/matakuliah`
+
+Feel free to try these endpoints using tools like Postman or REST Client (in VSCode).
+
+> Note: For the `/mahasiswa/khs` endpoint, you still need to include the `X-API-KEY` header and the `nim` query parameter as described in the documentation.
+
 # Endpoints
 
 Here are the available API routes:

@@ -12,17 +12,17 @@ This is a simple Laravel API that uses secret key for authentication. The applic
 
 ## Installation
 
-Follow these steps to get yout local envoriment up and running.
+Follow these steps to get your local envoriment up and running.
 
 1. **Clone the Repository**
     Clone the repository to your local machine:
     ```bash
-    git clone [https://github.com/BheTzhi/learning-api-secret-key.git](https://github.com/BheTzhi/learning-api-secret-key.git)
+    git clone https://github.com/BheTzhi/learning-api-secret-key.git
     ```
 
 2. **Install Dependencies**
     Navigate to the project directory and install the required dependencies via Composer:
-    ```cd learning-api-secret-key (you project name)
+    ```cd learning-api-secret-key (your project name)
     composer install
     ```
 
@@ -54,6 +54,57 @@ Follow these steps to get yout local envoriment up and running.
     ```
 
 The Api will be access at `http://127.0.0.1:8000` .
+
+## ✨ Main Features
+
+- Laravel-based RESTful API
+- Secure access using custom API Key in HTTP headers
+- Custom middleware for student identity verification
+- Modular structure using Models, Controllers, and Middleware
+- Student data including courses, departments, and KHS (grade reports)
+- Sample seed data for quick testing
+
+## 📁 Project Structure
+
+```
+learning-api-secret-key/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/         # API Controllers
+│   │   └── Middleware/          # Custom Middleware (e.g. VerifyApiSecret)
+│   └── Models/                  # Eloquent Models: Mahasiswa, Jurusan, Matakuliah
+├── routes/
+│   └── api.php                  # API route definitions
+├── database/
+│   ├── migrations/              # Database table structures
+│   └── seeders/                 # Sample data seeders
+├── .env                         # Environment configuration
+└── README.md                    # Project documentation
+```
+
+## 🖼️ Sample JSON Response
+
+Here's an example of the JSON response returned from the `/mahasiswa/khs` endpoint:
+
+```json
+{
+  "nim": "12345",
+  "name": "Ahmad Fauzi",
+  "semester": "4",
+  "khs": [
+    {
+      "course": "Web Programming",
+      "credits": 3,
+      "grade": "A"
+    },
+    {
+      "course": "Database Systems",
+      "credits": 2,
+      "grade": "B+"
+    }
+  ]
+}
+```
 
 ## Live Demo
 
@@ -106,7 +157,7 @@ Query Parameters:
 
 Example Request (Postman):
 ```bash
-GET htt://127.0.0.1:8000/mahasiswa/khs?nim=12345
+GET http://127.0.0.1:8000/mahasiswa/khs?nim=12345
 ```
 
 Headers:
